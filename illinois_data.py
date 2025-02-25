@@ -4,6 +4,8 @@ from bs4 import BeautifulSoup
 import requests
 
 # Paso 1: Crear la base de datos y la tabla desde Python
+
+
 def create_database_and_table():
     try:
         # Conexión al servidor PostgreSQL (sin especificar una base de datos)
@@ -17,7 +19,8 @@ def create_database_and_table():
         cursor = conn.cursor()
 
         # Crear la base de datos "illinois_db" si no existe
-        cursor.execute("SELECT datname FROM pg_database WHERE datname='illinois_db';")
+        cursor.execute(
+            "SELECT datname FROM pg_database WHERE datname='illinois_db';")
         if not cursor.fetchone():
             cursor.execute("CREATE DATABASE illinois_db;")
             print("Base de datos 'illinois_db' creada correctamente.")
