@@ -1,0 +1,72 @@
+[
+    {
+        "senator": "Neil Anderson",
+        "bills": "Bills",
+        "committees": "Committees",
+        "district": "47",
+        "party": "R"
+    },
+    {
+        "senator": "Omar Aquino",
+        "bills": "Bills",
+        "committees": "Committees",
+        "district": "2",
+        "party": "D"
+    },
+    {
+        "senator": "Li Arellano, Jr.",
+        "bills": "Bills",
+        "committees": "Committees",
+        "district": "37",
+        "party": "R"
+    },
+    {
+        "senator": "Chris Balkema",
+        "bills": "Bills",
+        "committees": "Committees",
+        "district": "53",
+        "party": "R"
+    },
+    {
+        "senator": "Christopher Belt",
+        "bills": "Bills",
+        "committees": "Committees",
+        "district": "57",
+        "party": "D"
+    },
+    {
+        "senator": "Terri Bryant",
+        "bills": "Bills",
+        "committees": "Committees",
+        "district": "58",
+        "party": "R"
+    },
+    {
+        "senator": "Cristina Castro",
+        "bills": "Bills",
+        "committees": "Committees",
+        "district": "22",
+        "party": "D"
+    },
+    {
+        "senator": "Javier L. Cervantes",
+        "bills": "Bills",
+        "committees": "Committees",
+        "district": "1",
+        "party": "D"
+    },
+    {
+        "senator": "Andrew S. Chesney",
+        "bills": "Bills",
+        "committees": "Committees",
+        "district": "45",
+        "party": "R"
+    },
+    {
+        "senator": "Lakesia Collins",
+        "bills": "Bills",
+        "committees": "Committees",
+        "district": "5",
+        "party": "D"
+    }
+]

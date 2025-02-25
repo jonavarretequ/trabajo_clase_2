@@ -1,10 +1,7 @@
 import psycopg2
 import json
-from datetime import datetime
 from bs4 import BeautifulSoup
-from datetime import datetime
 import requests
-import time
 
 # Paso 1: Crear la base de datos y la tabla desde Python
 def create_database_and_table():
@@ -64,7 +61,7 @@ def create_database_and_table():
 
 
 # Función para obtener los datos del scraping
-def scrape_senator_data():
+def scrape_senator_data(format="tuple"):
     # Step 1: Make a GET request
     req = requests.get('http://www.ilga.gov/senate/default.asp')
 
@@ -82,7 +79,17 @@ def scrape_senator_data():
     for i in range(0, 50, 5):  # 50 elements, 5 elements per row
         row = columns_elements[i:i+5]
         row_data = [element.get_text(strip=True) for element in row]
-        rows.append(tuple(row_data))
+
+        if format == "tuple":
+            rows.append(tuple(row_data))  # Formato para la base de datos
+        elif format == "json":
+            rows.append({
+                "senator": row_data[0],
+                "bills": row_data[1],
+                "committees": row_data[2],
+                "district": row_data[3],
+                "party": row_data[4]
+            })  # Formato para JSON
 
     return rows
 
@@ -115,31 +122,33 @@ def insert_senator_tbl(data):
     except Exception as e:
         print(f"Error al insertar datos en la tabla: {e}")
 
-# Paso 3: Guardar logs no estructurados en un archivo JSON
-def save_senator_tbl():
+
+# Paso 3: Guardar datos en un archivo JSON
+def save_senator_tbl(data):
     try:
-        # Simulación de logs no estructurados
-        senator_tbl = [
-            "[2025-02-22 10:10:00] Firewall Alert: Blocked incoming traffic from 10.0.0.1 to port 22.",
-            "[2025-02-22 10:15:00] IDS Alert: Suspicious activity detected from IP 192.168.1.20."
-        ]
-
-        # Guardar logs en un archivo JSON
+        # Guardar los datos en un archivo JSON
         with open("senator_tbl.json", "w") as file:
-            json.dump(senator_tbl, file, indent=4)
+            json.dump(data, file, indent=4)
 
-        print("Logs no estructurados guardados en 'unsenator_tbl.json'")
+        print("Datos de los senadores guardados en 'senator_tbl.json'")
 
     except Exception as e:
-        print(f"Error al guardar logs no estructurados: {e}")
+        print(f"Error al guardar los datos en JSON: {e}")
+
 
 # Ejecutar todas las funciones
 if __name__ == "__main__":
+    # Crear base de datos y tabla
+    create_database_and_table()
 
-    create_database_and_table()  # Crear base de datos y tabla
-    # Paso 1: Obtener los datos del scraping
-    senator_data = scrape_senator_data()
+    # Obtener los datos del scraping en formato de tuplas (para la base de datos)
+    senator_data_tuples = scrape_senator_data(format="tuple")
 
-    # Paso 2: Insertar los datos en la base de datos
-    #insert_senator_tbl(senator_data)   # Insertar datos estructurados
-    #save_senator_tbl()     # Guardar logs no estructurados
+    # Insertar los datos en la base de datos
+    insert_senator_tbl(senator_data_tuples)
+
+    # Obtener los datos del scraping en formato de diccionarios (para JSON)
+    senator_data_json = scrape_senator_data(format="json")
+
+    # Guardar los datos en un archivo JSON
+    save_senator_tbl(senator_data_json)
